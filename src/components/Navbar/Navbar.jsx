@@ -92,7 +92,10 @@ const Navbar = () => {
         <button className="btn btn-ghost btn-circle">
           <BsPersonCircle className="h-6 w-6" title="My Profile" />
         </button>
-        <Link to="/login" className="btn btn-primary">
+        <Link
+          to="/login"
+          className="btn btn-primary text-white duration-200 rounded-lg"
+        >
           Login
         </Link>
       </div>

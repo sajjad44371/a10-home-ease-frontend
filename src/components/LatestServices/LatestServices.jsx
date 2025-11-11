@@ -9,11 +9,11 @@ const LatestServices = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-heading font-bold text-center text-base-content mb-3">
-              Why HomeEase is the Right Choice
+              Our Latest Services
             </h2>
             <p className="text-center text-xl text-gray-500 mb-12">
-              Experience the professional difference with safety, speed, and
-              quality at the core of every service.
+              We provide fast, reliable, and verified professional services for
+              all your home needs
             </p>
           </div>
 

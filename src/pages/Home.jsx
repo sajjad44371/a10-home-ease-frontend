@@ -5,13 +5,16 @@ import WhyChoose from "../components/WhyChoose/WhyChoose";
 import ProSection from "../components/ProSection/ProSection";
 import ServiceTracker from "../components/ServiceTracker/ServiceTracker";
 import Faq from "../components/FAQ/Faq";
-import Footer from "../components/Footer/Footer";
+import LatestServices from "../components/LatestServices/LatestServices";
 
 const Home = () => {
   return (
     <>
       <section>
         <Slider></Slider>
+      </section>
+      <section>
+        <LatestServices></LatestServices>
       </section>
       <section>
         <WhyChoose></WhyChoose>
@@ -28,9 +31,7 @@ const Home = () => {
       <section>
         <Faq></Faq>
       </section>
-      <footer>
-        <Footer></Footer>
-      </footer>
+      
     </>
   );
 };

@@ -1,9 +1,12 @@
 import React from "react";
+import Slider from "../components/Slider/Slider";
 
 const Home = () => {
   return (
     <>
-      <h2 className="text-xl text-blue-500">This is the Home Page</h2>
+      <section>
+        <Slider></Slider>
+      </section>
     </>
   );
 };

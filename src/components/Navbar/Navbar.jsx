@@ -89,9 +89,9 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1">{links}</ul>
       </div>
       <div className="navbar-end space-x-3">
-        <button className="btn btn-ghost btn-circle">
+        <Link to="/profile" className="btn btn-ghost btn-circle">
           <BsPersonCircle className="h-6 w-6" title="My Profile" />
-        </button>
+        </Link>
         <Link
           to="/login"
           className="btn btn-primary text-white duration-200 rounded-lg"

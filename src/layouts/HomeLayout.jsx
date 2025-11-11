@@ -1,12 +1,15 @@
 import React from "react";
 import { Outlet } from "react-router";
+import Navbar from "../components/Navbar/Navbar";
 
 const HomeLayout = () => {
   return (
     <>
       <div>
-        <header></header>
-        <main>
+        <header>
+          <Navbar></Navbar>
+        </header>
+        <main className="w-11/12 mx-auto px-3">
           <Outlet></Outlet>
         </main>
         <footer></footer>

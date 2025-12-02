@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import { Eye, EyeOff, Mail, Lock } from "lucide-react";
 import { Link } from "react-router";
 import { FcGoogle } from "react-icons/fc";
+import { use } from "react";
+import { AuthContext } from "../Provider/AuthContext";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const { googleSignIn, setLoading } = use(AuthContext);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -15,6 +18,19 @@ const Login = () => {
     const email = e.target.email.value;
     const password = e.target.password.value;
     console.log(email, password);
+  };
+
+  const handleGoogleLogin = () => {
+    console.log("first");
+    googleSignIn()
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log("Error during google login", error.code);
+      });
   };
 
   return (
@@ -82,6 +98,7 @@ const Login = () => {
 
           <div className="form-control">
             <button
+              onClick={handleGoogleLogin}
               type="submit"
               className="btn btn-primary shadow-lg text-white rounded-lg"
             >

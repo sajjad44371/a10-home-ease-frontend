@@ -2,8 +2,12 @@ import React from "react";
 import { BsPersonCircle } from "react-icons/bs";
 import { Link, NavLink } from "react-router";
 import logo from "../../assets/logo.png";
+import { AuthContext } from "../../Provider/AuthContext";
+import { use } from "react";
 
 const Navbar = () => {
+  const { user } = use(AuthContext);
+
   const links = (
     <>
       <li>
@@ -88,16 +92,24 @@ const Navbar = () => {
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{links}</ul>
       </div>
+
+      {/* login-logout toggle  */}
       <div className="navbar-end space-x-3">
         <Link to="/profile" className="btn btn-ghost btn-circle">
           <BsPersonCircle className="h-6 w-6" title="My Profile" />
         </Link>
-        <Link
-          to="/login"
-          className="btn btn-primary text-white duration-200 rounded-lg"
-        >
-          Login
-        </Link>
+        {user ? (
+          <Link className="btn btn-primary text-white duration-200 rounded-lg">
+            Logout
+          </Link>
+        ) : (
+          <Link
+            to="/login"
+            className="btn btn-primary text-white duration-200 rounded-lg"
+          >
+            Login
+          </Link>
+        )}
       </div>
     </nav>
   );

@@ -17,7 +17,17 @@ const AddService = () => {
     const category = e.target.category.value;
     const description = e.target.description.value;
     const photoURL = e.target.photoURL.value;
-    console.log(service_name, price, category, description, photoURL);
+    const providerName = e.target.provider_name.value;
+    const providerEmail = e.target.provider_email.value;
+    console.log(
+      service_name,
+      price,
+      category,
+      description,
+      photoURL,
+      providerName,
+      providerEmail
+    );
   };
 
   return (
@@ -144,7 +154,7 @@ const AddService = () => {
             </label>
             <input
               type="email"
-              name="email"
+              name="provider_email"
               defaultValue={"email"}
               className="input input-bordered border-primary outline-primary w-full"
               required

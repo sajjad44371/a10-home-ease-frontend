@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Eye, EyeOff, Mail, Lock } from "lucide-react";
 import { Link } from "react-router";
+import { FcGoogle } from "react-icons/fc";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -76,6 +77,15 @@ const Login = () => {
               className="btn btn-primary shadow-lg text-white rounded-lg"
             >
               Login
+            </button>
+          </div>
+
+          <div className="form-control">
+            <button
+              type="submit"
+              className="btn btn-primary shadow-lg text-white rounded-lg"
+            >
+              <FcGoogle></FcGoogle> Login With Google
             </button>
           </div>
 

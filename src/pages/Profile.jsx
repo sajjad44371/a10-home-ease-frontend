@@ -11,18 +11,20 @@ const Profile = () => {
       <div className="bg-white shadow-xl rounded-2xl p-8 max-w-sm w-full text-center">
         <div className="flex justify-center mb-4">
           <img
-            src={user.photoUrl}
-            alt="User"
+            src={user?.photoURL}
+            alt={user?.displayName}
             className="w-28 h-28 rounded-full border-4 border-teal-500 shadow-md"
           />
         </div>
-        <h2 className="text-2xl font-bold text-gray-800">{user.displayName}</h2>
-        <p className="text-gray-500">{user.email}</p>
+        <h2 className="text-2xl font-bold text-gray-800">
+          Name: {user?.displayName}
+        </h2>
+        <p className="text-gray-500">Email: {user?.email}</p>
 
         <div className="mt-6 bg-gray-50 rounded-lg p-3 text-sm">
           <p className="text-gray-600">
             <span className="font-semibold text-teal-600">Last Login:</span>{" "}
-            {user.lastLogin || "Not available"}
+            {user?.lastLogin || "Not available"}
           </p>
         </div>
 

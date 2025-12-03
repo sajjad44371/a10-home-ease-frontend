@@ -6,7 +6,17 @@ import { AuthContext } from "../../Provider/AuthContext";
 import { use } from "react";
 
 const Navbar = () => {
-  const { user } = use(AuthContext);
+  const { user, logOut } = use(AuthContext);
+
+  const handleLogout = () => {
+    logOut()
+      .then(() => {
+        console.log("Sign out successfully");
+      })
+      .catch((error) => {
+        console.log("Error happened", error.code);
+      });
+  };
 
   const links = (
     <>
@@ -99,7 +109,10 @@ const Navbar = () => {
           <BsPersonCircle className="h-6 w-6" title="My Profile" />
         </Link>
         {user ? (
-          <Link className="btn btn-primary text-white duration-200 rounded-lg">
+          <Link
+            onClick={handleLogout}
+            className="btn btn-primary text-white duration-200 rounded-lg"
+          >
             Logout
           </Link>
         ) : (

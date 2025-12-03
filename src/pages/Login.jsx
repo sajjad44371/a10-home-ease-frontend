@@ -7,7 +7,7 @@ import { AuthContext } from "../Provider/AuthContext";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const { googleSignIn, setLoading } = use(AuthContext);
+  const { googleSignIn, setLoading, loginUser, setUser } = use(AuthContext);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -18,6 +18,17 @@ const Login = () => {
     const email = e.target.email.value;
     const password = e.target.password.value;
     console.log(email, password);
+    loginUser(email, password)
+      .then((userCredential) => {
+        console.log(userCredential.user);
+        setUser(userCredential.user);
+        setLoading(false);
+        e.target.reset();
+      })
+      .catch((error) => {
+        console.error(error.code);
+        alert(error.code)
+      });
   };
 
   const handleGoogleLogin = () => {

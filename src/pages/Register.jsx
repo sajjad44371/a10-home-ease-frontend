@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, use } from "react";
 import {
   Mail,
   User,
@@ -10,8 +10,11 @@ import {
   EyeOff,
 } from "lucide-react";
 import { Link } from "react-router";
+import { AuthContext } from "../Provider/AuthContext";
 
 const Register = () => {
+  const { createUser, setUser } = use(AuthContext);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -48,9 +51,26 @@ const Register = () => {
     e.preventDefault();
     setValidPassword(true);
 
+    const name = e.target.name.value;
+    const email = e.target.email.value;
+    const photoUrl = e.target.photoUrl.value;
+    const password = e.target.password.value;
+
+    console.log(name, email, photoUrl, password);
+
     if (validation.isValid) {
       console.log("Registration Data Submitted:", formData);
       // TODO: Add your actual registration logic here (e.g., API call to Firebase/Backend)
+      createUser(email, password)
+        .then((userCredential) => {
+          // Signed up
+          const currentUser = userCredential.user;
+          console.log(currentUser);
+          e.target.reset();
+        })
+        .catch((error) => {
+          console.error(error.code);
+        });
       alert("Registration Attempted! Check the console for data.");
     } else {
       alert("Please correct the errors in the password field.");

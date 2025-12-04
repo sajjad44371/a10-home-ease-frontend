@@ -4,7 +4,23 @@ import { Image, User, X } from "lucide-react";
 import { FaCross } from "react-icons/fa";
 
 const Profile = () => {
-  const { user, loading } = useContext(AuthContext);
+  const { user, loading, setLoading, updateProfileInfo } = useContext(AuthContext);
+
+  const handleUpdateProfile = (e) => {
+    e.preventDefault();
+    const name = e.target.name.value;
+    const photoUrl = e.target.photoUrl.value;
+    console.log(name, photoUrl);
+
+    updateProfileInfo(name, photoUrl)
+      .then(() => {
+        alert("Profile Updated");
+        setLoading(false)
+      })
+      .catch((error) => {
+        console.log("Error happened", error.code);
+      });
+  };
 
   if (loading) return <p>Loading...</p>;
 
@@ -33,53 +49,56 @@ const Profile = () => {
         {/* Open the modal using document.getElementById('ID').showModal() method */}
         <dialog id="my_modal" className="modal modal-bottom sm:modal-middle">
           <div className="modal-box">
-            <h3 className="font-bold text-lg">Update Your Profile</h3>
+            <h3 className="font-bold text-lg mb-4">Update Your Profile</h3>
 
-            <div className="modal-action justify-center">
-              <form method="dialog">
-                {/* if there is a button in form, it will close the modal */}
+            <form onSubmit={handleUpdateProfile} className="space-y-6">
+              <div className="form-control">
+                <label className="label block">
+                  <span className="label-text flex items-center font-medium">
+                    <User size={16} className="mr-2 text-primary" /> Full Name
+                  </span>
+                </label>
+                <input
+                  type="text"
+                  name="name"
+                  defaultValue={user?.displayName}
+                  placeholder="Enter your full name"
+                  className="input input-bordered w-full"
+                />
+              </div>
 
-                <div className="text-left space-y-6">
-                  <div className="form-control">
-                    <label className="label">
-                      <span className="label-text flex items-center font-medium">
-                        <User size={16} className="mr-2 text-primary" /> Full
-                        Name
-                      </span>
-                    </label>
-                    <input
-                      type="text"
-                      name="name"
-                      placeholder="Enter your full name"
-                      className="input input-bordered border-primary outline-primary w-full"
-                    />
-                  </div>
+              <div className="form-control">
+                <label className="label block">
+                  <span className="label-text flex items-center font-medium">
+                    <Image size={16} className="mr-2 text-primary" /> Photo URL
+                  </span>
+                </label>
+                <input
+                  type="url"
+                  name="photoUrl"
+                  defaultValue={user?.photoURL}
+                  placeholder="Link to your profile picture"
+                  className="input input-bordered w-full"
+                />
+              </div>
 
-                  <div className="form-control">
-                    <label className="label">
-                      <span className="label-text flex items-center font-medium">
-                        <Image size={16} className="mr-2 text-primary" />{" "}
-                        Profile Photo URL
-                      </span>
-                    </label>
-                    <input
-                      type="url"
-                      name="photoUrl"
-                      placeholder="Link to your profile picture"
-                      className="input input-bordered border-primary outline-primary w-full"
-                    />
-                  </div>
-                  <button
-                    type="submit"
-                    className=" btn btn-primary text-white px-6 py-2 rounded-lg transition"
-                  >
-                    Update
-                  </button>
-                </div>
-                <button className="btn mt-4 text-right">
-                  <X></X>
-                </button>
-              </form>
+              <button
+                type="submit"
+                className="btn btn-primary text-white w-full mt-4"
+              >
+                Update
+              </button>
+            </form>
+
+            {/* Close button */}
+            <div className="modal-action">
+              <button
+                onClick={() => document.getElementById("my_modal").close()}
+                type="button"
+                className="btn"
+              >
+                <X />
+              </button>
             </div>
           </div>
         </dialog>

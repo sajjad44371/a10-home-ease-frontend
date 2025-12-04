@@ -4,7 +4,8 @@ import { Image, User, X } from "lucide-react";
 import { FaCross } from "react-icons/fa";
 
 const Profile = () => {
-  const { user, loading, setLoading, updateProfileInfo } = useContext(AuthContext);
+  const { user, loading, setLoading, updateProfileInfo } =
+    useContext(AuthContext);
 
   const handleUpdateProfile = (e) => {
     e.preventDefault();
@@ -15,10 +16,11 @@ const Profile = () => {
     updateProfileInfo(name, photoUrl)
       .then(() => {
         alert("Profile Updated");
-        setLoading(false)
+        setLoading(false);
       })
       .catch((error) => {
         console.log("Error happened", error.code);
+        alert(error.code);
       });
   };
 
@@ -42,7 +44,9 @@ const Profile = () => {
         <div className="mt-6 bg-gray-50 rounded-lg p-3 text-sm">
           <p className="text-gray-600">
             <span className="font-semibold text-teal-600">Last Login:</span>{" "}
-            {user?.lastLogin || "Not available"}
+            {user?.metadata?.lastSignInTime
+              ? new Date(user.metadata.lastSignInTime).toLocaleString()
+              : "Not available"}
           </p>
         </div>
 

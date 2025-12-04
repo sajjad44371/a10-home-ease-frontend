@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import { Eye, EyeOff, Mail, Lock } from "lucide-react";
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 import { FcGoogle } from "react-icons/fc";
 import { use } from "react";
 import { AuthContext } from "../Provider/AuthContext";
+import { useNavigate } from "react-router";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { googleSignIn, setLoading, loginUser, setUser } = use(AuthContext);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -22,12 +25,13 @@ const Login = () => {
       .then((userCredential) => {
         console.log(userCredential.user);
         setUser(userCredential.user);
+        navigate(location.state ? location.state : "/");
         setLoading(false);
         e.target.reset();
       })
       .catch((error) => {
         console.error(error.code);
-        alert(error.code)
+        alert(error.code);
       });
   };
 
@@ -37,10 +41,13 @@ const Login = () => {
       .then((result) => {
         const user = result.user;
         console.log(user);
+        navigate(location.state ? location.state : "/");
+        alert("Successfully login");
         setLoading(false);
       })
       .catch((error) => {
         console.log("Error during google login", error.code);
+        alert(error.code);
       });
   };
 

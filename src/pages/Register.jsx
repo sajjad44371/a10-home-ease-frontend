@@ -66,10 +66,12 @@ const Register = () => {
           // Signed up
           const currentUser = userCredential.user;
           console.log(currentUser);
+          alert("User created Successfully");
           e.target.reset();
         })
         .catch((error) => {
           console.error(error.code);
+          alert(error.code);
         });
       alert("Registration Attempted! Check the console for data.");
     } else {

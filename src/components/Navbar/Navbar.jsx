@@ -105,9 +105,11 @@ const Navbar = () => {
 
       {/* login-logout toggle  */}
       <div className="navbar-end space-x-3">
-        <Link to="/profile" className="btn btn-ghost btn-circle">
-          <BsPersonCircle className="h-6 w-6" title="My Profile" />
-        </Link>
+        {user && (
+          <Link to="/profile" className="btn btn-ghost btn-circle">
+            <BsPersonCircle className="h-6 w-6" title="My Profile" />
+          </Link>
+        )}
         {user ? (
           <Link
             onClick={handleLogout}

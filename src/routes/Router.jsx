@@ -8,6 +8,7 @@ import MyBookings from "../pages/MyBookings";
 import Profile from "../pages/Profile";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
+import PrivateRouter from "./PrivateRouter";
 
 const router = createBrowserRouter([
   {
@@ -24,15 +25,27 @@ const router = createBrowserRouter([
       },
       {
         path: "/my-services",
-        element: <MyServices></MyServices>,
+        element: (
+          <PrivateRouter>
+            <MyServices></MyServices>
+          </PrivateRouter>
+        ),
       },
       {
         path: "/add-service",
-        element: <AddServices></AddServices>,
+        element: (
+          <PrivateRouter>
+            <AddServices></AddServices>
+          </PrivateRouter>
+        ),
       },
       {
         path: "/my-bookings",
-        element: <MyBookings>,</MyBookings>,
+        element: (
+          <PrivateRouter>
+            <MyBookings></MyBookings>
+          </PrivateRouter>
+        ),
       },
       {
         path: "/profile",

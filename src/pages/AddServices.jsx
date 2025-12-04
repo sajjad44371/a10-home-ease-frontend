@@ -1,4 +1,4 @@
-import React from "react";
+import React, { use } from "react";
 import {
   ClipboardList,
   Tag,
@@ -8,26 +8,40 @@ import {
   User,
   Mail,
 } from "lucide-react";
+import { AuthContext } from "../Provider/AuthContext";
+import axios from "axios";
 
 const AddService = () => {
+  const { user } = use(AuthContext);
+
   const handleAddService = (e) => {
     e.preventDefault();
     const service_name = e.target.service_name.value;
-    const price = e.target.price.value;
+    const price = parseInt(e.target.price.value);
     const category = e.target.category.value;
     const description = e.target.description.value;
     const photoURL = e.target.photoURL.value;
     const providerName = e.target.provider_name.value;
     const providerEmail = e.target.provider_email.value;
-    console.log(
+
+    const formData = {
       service_name,
       price,
       category,
       description,
       photoURL,
       providerName,
-      providerEmail
-    );
+      providerEmail,
+    };
+
+    console.log(formData);
+
+    // post services
+    axios.post("http://localhost:3000/services", formData).then((res) => {
+      console.log(res);
+      alert("Added service successfully");
+      e.target.reset();
+    });
   };
 
   return (
@@ -139,7 +153,7 @@ const AddService = () => {
             <input
               type="text"
               name="provider_name"
-              defaultValue={"Name"}
+              defaultValue={user?.displayName}
               className="input input-bordered border-primary outline-primary w-full"
               required
               readOnly
@@ -155,7 +169,7 @@ const AddService = () => {
             <input
               type="email"
               name="provider_email"
-              defaultValue={"email"}
+              defaultValue={user?.email}
               className="input input-bordered border-primary outline-primary w-full"
               required
               readOnly

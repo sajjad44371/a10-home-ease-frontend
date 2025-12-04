@@ -1,8 +1,15 @@
-import React from "react";
+import React, { use } from "react";
 import ServiceCard from "../ServiceCard/ServiceCard";
 import { Link } from "react-router";
 
-const LatestServices = () => {
+const LatestServices = ({ latestServicesPromise }) => {
+  const latestServices = use(latestServicesPromise);
+  const sortedServices = latestServices.sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
+  const services = sortedServices.slice(0, 3);
+  console.log(latestServices, services);
+
   return (
     <>
       <div className="py-20 bg-base-100 text-base-content">
@@ -18,7 +25,9 @@ const LatestServices = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <ServiceCard></ServiceCard>
+            {services.map((service) => (
+              <ServiceCard key={service._id} service={service}></ServiceCard>
+            ))}
           </div>
 
           <div className="text-center mt-16">

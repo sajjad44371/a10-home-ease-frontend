@@ -1,22 +1,7 @@
 import React from "react";
 import { ArrowRight } from "lucide-react"; // আইকন ব্যবহারের জন্য
 
-// স্ট্যাটিক ডেমো সার্ভিস ডেটা
-const staticServiceData = {
-  id: 1,
-  imageURL: "https://placehold.co/800x400/3b82f6/ffffff?text=AC+Service", // ডেমো ইমেজ URL
-  title: "Expert AC Repair & Service",
-  description:
-    "Keep your cool with our certified technicians. From routine maintenance to complex repairs, we've got your AC covered.",
-  startingPrice: "BDT 500",
-  rating: 4.8,
-  reviews: 120,
-  categoryColor: "border-primary", // ক্যাটেগরি হাইলাইটের জন্য প্রাইমারি রঙ
-};
-
-const ServiceCard = () => {
-  const service = staticServiceData;
-
+const ServiceCard = ({ service }) => {
   return (
     <div
       className={`
@@ -31,8 +16,8 @@ const ServiceCard = () => {
       {/* উপরের অংশ: ইমেজ ডিসপ্লে */}
       <figure className="h-48 overflow-hidden">
         <img
-          src={service.imageURL}
-          alt={service.title}
+          src={service?.imageURL}
+          alt={service?.service_name}
           // যদি ডেমো ইমেজ লোড না হয়, তবে ফলব্যাক টেক্সট দেখাবে
           onError={(e) => {
             e.target.onerror = null;
@@ -46,12 +31,13 @@ const ServiceCard = () => {
       <div className="card-body p-6">
         {/* টাইটেল ও রেটিং */}
         <div className="flex items-start justify-between mb-2">
-          <h2 className="card-title text-2xl font-bold text-gray-900 flex-grow">
-            {service.title}
+          <h2 className="card-title text-2xl font-bold text-gray-900 grow">
+            {service?.service_name}
           </h2>
           {/* রেটিং ডিসপ্লে */}
-          <div className="flex items-center text-gray-700 text-sm ml-4 pt-1 flex-shrink-0">
-            <span className="text-warning mr-1">★</span> {service.rating}
+          <div className="flex items-center text-gray-700 text-sm ml-4 pt-1 shrink-0">
+            <span className="text-warning mr-1">★</span>{" "}
+            {service?.rating || "4.0"}
           </div>
         </div>
 
@@ -61,15 +47,15 @@ const ServiceCard = () => {
         </p>
 
         {/* রিভিউ সংখ্যা */}
-        <p className="text-sm text-gray-500 mb-4">{service.reviews} Reviews</p>
+        <p className="text-sm text-gray-500 mb-4">
+          {service?.reviews || "200"} Reviews
+        </p>
 
         {/* নিচের অংশ: মূল্য এবং অ্যাকশন বাটন */}
         <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
           <div>
             <span className="text-sm text-gray-500">Starting from</span>
-            <p className="text-xl font-bold text-primary">
-              {service.startingPrice}
-            </p>
+            <p className="text-xl font-bold text-primary">{service?.price}</p>
           </div>
           <button className="flex items-center text-primary hover:bg-primary hover:text-white px-3 py-2 rounded-lg transition duration-200">
             Book Now

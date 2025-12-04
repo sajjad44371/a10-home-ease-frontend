@@ -7,6 +7,11 @@ import ServiceTracker from "../components/ServiceTracker/ServiceTracker";
 import Faq from "../components/FAQ/Faq";
 import LatestServices from "../components/LatestServices/LatestServices";
 
+// promise
+const latestServicesPromise = fetch("http://localhost:3000/services").then(
+  (res) => res.json()
+);
+
 const Home = () => {
   return (
     <>
@@ -14,7 +19,9 @@ const Home = () => {
         <Slider></Slider>
       </section>
       <section>
-        <LatestServices></LatestServices>
+        <LatestServices
+          latestServicesPromise={latestServicesPromise}
+        ></LatestServices>
       </section>
       <section>
         <WhyChoose></WhyChoose>
@@ -31,7 +38,6 @@ const Home = () => {
       <section>
         <Faq></Faq>
       </section>
-      
     </>
   );
 };

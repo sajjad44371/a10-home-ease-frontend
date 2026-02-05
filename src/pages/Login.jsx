@@ -11,6 +11,7 @@ const Login = () => {
   const { googleSignIn, setLoading, loginUser, setUser } = use(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
+  const from = location.state?.from?.pathname;
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -25,7 +26,7 @@ const Login = () => {
       .then((userCredential) => {
         console.log(userCredential.user);
         setUser(userCredential.user);
-        navigate(location.state ? location.state : "/");
+        navigate(from || "/profile", { replace: true });
         setLoading(false);
         e.target.reset();
       })
@@ -41,7 +42,7 @@ const Login = () => {
       .then((result) => {
         const user = result.user;
         console.log(user);
-        navigate(location.state ? location.state : "/");
+        navigate(from || "/profile", { replace: true });
         alert("Successfully login");
         setLoading(false);
       })

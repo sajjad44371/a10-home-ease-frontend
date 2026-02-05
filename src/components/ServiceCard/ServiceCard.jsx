@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrowRight } from "lucide-react"; // আইকন ব্যবহারের জন্য
+import { ArrowRight } from "lucide-react";
 
 const ServiceCard = ({ service }) => {
   return (
@@ -13,12 +13,10 @@ const ServiceCard = ({ service }) => {
         group 
       `}
     >
-      {/* উপরের অংশ: ইমেজ ডিসপ্লে */}
       <figure className="h-48 overflow-hidden">
         <img
           src={service?.imageURL}
           alt={service?.service_name}
-          // যদি ডেমো ইমেজ লোড না হয়, তবে ফলব্যাক টেক্সট দেখাবে
           onError={(e) => {
             e.target.onerror = null;
             e.target.src =
@@ -29,29 +27,25 @@ const ServiceCard = ({ service }) => {
       </figure>
 
       <div className="card-body p-6">
-        {/* টাইটেল ও রেটিং */}
         <div className="flex items-start justify-between mb-2">
           <h2 className="card-title text-2xl font-bold text-gray-900 grow">
             {service?.service_name}
           </h2>
-          {/* রেটিং ডিসপ্লে */}
+
           <div className="flex items-center text-gray-700 text-sm ml-4 pt-1 shrink-0">
             <span className="text-warning mr-1">★</span>{" "}
             {service?.rating || "4.0"}
           </div>
         </div>
 
-        {/* বর্ণনা */}
         <p className="text-gray-600 mb-4 h-12 overflow-hidden text-base">
           {service.description}
         </p>
 
-        {/* রিভিউ সংখ্যা */}
         <p className="text-sm text-gray-500 mb-4">
           {service?.reviews || "200"} Reviews
         </p>
 
-        {/* নিচের অংশ: মূল্য এবং অ্যাকশন বাটন */}
         <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
           <div>
             <span className="text-sm text-gray-500">Starting from</span>

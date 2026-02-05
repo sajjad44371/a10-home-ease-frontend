@@ -5,9 +5,9 @@ import { Link } from "react-router";
 const LatestServices = ({ latestServicesPromise }) => {
   const latestServices = use(latestServicesPromise);
   const sortedServices = latestServices.sort(
-    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
   );
-  const services = sortedServices.slice(0, 3);
+  const services = sortedServices.slice(0, 6);
   console.log(latestServices, services);
 
   return (

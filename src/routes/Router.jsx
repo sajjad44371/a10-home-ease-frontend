@@ -9,6 +9,7 @@ import Profile from "../pages/Profile";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import PrivateRouter from "./PrivateRouter";
+import ServiceDetails from "../pages/ServiceDetails";
 
 const router = createBrowserRouter([
   {
@@ -58,6 +59,12 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register></Register>,
+      },
+      {
+        path: "/service-details/:id",
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/services/${params.id}`),
+        element: <ServiceDetails></ServiceDetails>,
       },
     ],
   },

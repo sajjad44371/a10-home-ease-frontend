@@ -1,5 +1,6 @@
 import React from "react";
 import { ArrowRight } from "lucide-react";
+import { Link } from "react-router";
 
 const ServiceCard = ({ service }) => {
   return (
@@ -15,7 +16,7 @@ const ServiceCard = ({ service }) => {
     >
       <figure className="h-48 overflow-hidden">
         <img
-          src={service?.imageURL}
+          src={service?.photoURL}
           alt={service?.service_name}
           onError={(e) => {
             e.target.onerror = null;
@@ -38,26 +39,21 @@ const ServiceCard = ({ service }) => {
           </div>
         </div>
 
-        <p className="text-gray-600 mb-4 h-12 overflow-hidden text-base">
-          {service.description}
-        </p>
-
-        <p className="text-sm text-gray-500 mb-4">
-          {service?.reviews || "200"} Reviews
-        </p>
-
         <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
           <div>
             <span className="text-sm text-gray-500">Starting from</span>
             <p className="text-xl font-bold text-primary">{service?.price}</p>
           </div>
-          <button className="flex items-center text-primary hover:bg-primary hover:text-white px-3 py-2 rounded-lg transition duration-200">
-            Book Now
+          <Link
+            to={`/service-details/${service._id}`}
+            className="flex items-center text-primary hover:bg-primary hover:text-white px-3 py-2 rounded-lg transition duration-200"
+          >
+            Details
             <ArrowRight
               size={20}
               className="ml-1 transition-transform duration-200 group-hover:translate-x-1"
             />
-          </button>
+          </Link>
         </div>
       </div>
     </div>

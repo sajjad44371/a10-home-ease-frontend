@@ -1,4 +1,5 @@
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router";
 
 const MyServices = () => {
   const [services, setServices] = useState([]);
@@ -10,8 +11,6 @@ const MyServices = () => {
         setServices(data);
       });
   }, []);
-
-  console.log(services);
 
   return (
     <div className=" min-h-screen bg-base-100 w-full">
@@ -44,7 +43,12 @@ const MyServices = () => {
                   <td>{service.category}</td>
                   <td>{service.price}</td>
                   <th>
-                    <button className="btn btn-ghost btn-xs">Update</button>
+                    <Link
+                      to={`/service-update/${service._id}`}
+                      className="btn btn-ghost btn-xs"
+                    >
+                      Update
+                    </Link>
                     <button className="btn btn-ghost btn-xs">Delete</button>
                   </th>
                 </tr>

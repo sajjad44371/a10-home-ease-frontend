@@ -10,6 +10,7 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import PrivateRouter from "./PrivateRouter";
 import ServiceDetails from "../pages/ServiceDetails";
+import ServiceUpdate from "../pages/ServiceUpdate";
 
 const router = createBrowserRouter([
   {
@@ -65,6 +66,12 @@ const router = createBrowserRouter([
         loader: ({ params }) =>
           fetch(`http://localhost:3000/services/${params.id}`),
         element: <ServiceDetails></ServiceDetails>,
+      },
+      {
+        path: "/service-update/:id",
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/services/${params.id}`),
+        element: <ServiceUpdate></ServiceUpdate>,
       },
     ],
   },

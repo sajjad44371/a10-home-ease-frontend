@@ -12,6 +12,22 @@ const MyServices = () => {
       });
   }, []);
 
+  const handleDelete = (id) => {
+    fetch(`http://localhost:3000/services/${id}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.deletedCount) {
+          alert("Successfully delete");
+          const remainingServices = services.filter(
+            (service) => service._id !== id,
+          );
+          setServices(remainingServices);
+        }
+      });
+  };
+
   return (
     <div className=" min-h-screen bg-base-100 w-full">
       <section className="bg-primary text-white py-16 lg:py-24">
@@ -49,7 +65,12 @@ const MyServices = () => {
                     >
                       Update
                     </Link>
-                    <button className="btn btn-ghost btn-xs">Delete</button>
+                    <button
+                      onClick={() => handleDelete(service._id)}
+                      className="btn btn-ghost btn-xs"
+                    >
+                      Delete
+                    </button>
                   </th>
                 </tr>
               ))}

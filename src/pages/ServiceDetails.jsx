@@ -16,6 +16,7 @@ const ServiceDetails = () => {
   const handleBookNow = (e) => {
     e.preventDefault();
     console.log("clicked");
+    const service_name = e.target.name.value;
     const userEmail = e.target.email.value;
     const serviceId = e.target.id.value;
     const bookingDate = e.target.date.value;
@@ -23,6 +24,7 @@ const ServiceDetails = () => {
     console.log(userEmail, serviceId, bookingDate, price);
 
     const bookingInfo = {
+      service_name,
       userEmail,
       serviceId,
       bookingDate,
@@ -41,6 +43,8 @@ const ServiceDetails = () => {
         console.log(data);
         if (data.insertedId) {
           alert("Successfully booked");
+          e.target.reset();
+          myRef.current.close();
         }
       });
   };
@@ -143,11 +147,16 @@ const ServiceDetails = () => {
                 <h2 className="text-3xl text-center">
                   Book our exclusive service
                 </h2>
-                <h3 className="py-5">
-                  Service Name:{" "}
-                  <span className="text-primary">{service?.service_name}</span>
-                </h3>
+
                 <form onSubmit={handleBookNow}>
+                  <label className="label">Service Name</label>
+                  <input
+                    type="text"
+                    className="input w-full mb-5"
+                    name="name"
+                    defaultValue={service?.service_name}
+                    readOnly
+                  />
                   <label className="label">User Email</label>
                   <input
                     type="email"

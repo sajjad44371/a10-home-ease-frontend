@@ -1,11 +1,50 @@
 import { ArrowLeft, Star } from "lucide-react";
-import React from "react";
+import React, { use, useRef } from "react";
 import { Link, useLoaderData } from "react-router";
+import { AuthContext } from "../Provider/AuthContext";
 
 const ServiceDetails = () => {
   const serviceData = useLoaderData();
   const service = serviceData[0];
-  console.log(service);
+  const myRef = useRef(null);
+  const { user } = use(AuthContext);
+
+  const handleShowModal = () => {
+    myRef.current.showModal();
+  };
+
+  const handleBookNow = (e) => {
+    e.preventDefault();
+    console.log("clicked");
+    const userEmail = e.target.email.value;
+    const serviceId = e.target.id.value;
+    const bookingDate = e.target.date.value;
+    const price = e.target.price.value;
+    console.log(userEmail, serviceId, bookingDate, price);
+
+    const bookingInfo = {
+      userEmail,
+      serviceId,
+      bookingDate,
+      price,
+    };
+
+    fetch("http://localhost:3000/bookings", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(bookingInfo),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.insertedId) {
+          alert("Successfully booked");
+        }
+      });
+  };
+
   return (
     <>
       <div>
@@ -49,6 +88,8 @@ const ServiceDetails = () => {
                     </span>
                     <span className="mx-2">•</span>
                     <span>Professional Service</span>
+                    <span className="mx-2">•</span>
+                    <span>{service?.category}</span>
                   </div>
 
                   <p className="text-gray-600 leading-relaxed mb-6">
@@ -75,7 +116,10 @@ const ServiceDetails = () => {
                     {service?.price} BDT
                   </p>
 
-                  <button className="w-full bg-primary text-white py-3 rounded-lg font-medium hover:bg-primary/90 transition">
+                  <button
+                    onClick={handleShowModal}
+                    className="w-full bg-primary text-white py-3 rounded-lg font-medium hover:bg-primary/90 transition cursor-pointer"
+                  >
                     Book This Service
                   </button>
 
@@ -85,6 +129,67 @@ const ServiceDetails = () => {
                 </div>
               </div>
             </div>
+
+            {/* Open the modal using document.getElementById('ID').showModal() method */}
+
+            <dialog
+              ref={myRef}
+              id="my_modal"
+              className="modal modal-bottom sm:modal-middle"
+            >
+              <div className="modal-box">
+                {/* modal body */}
+
+                <h2 className="text-3xl text-center">
+                  Book our exclusive service
+                </h2>
+                <h3 className="py-5">
+                  Service Name:{" "}
+                  <span className="text-primary">{service?.service_name}</span>
+                </h3>
+                <form onSubmit={handleBookNow}>
+                  <label className="label">User Email</label>
+                  <input
+                    type="email"
+                    className="input w-full mb-5"
+                    name="email"
+                    defaultValue={user?.email}
+                    readOnly
+                  />
+                  <label className="label">Service ID</label>
+                  <input
+                    name="id"
+                    className="input w-full mb-5"
+                    defaultValue={service?._id}
+                    readOnly
+                  ></input>
+                  <label className="label">Booking Date</label>
+                  <input
+                    type="date"
+                    name="date"
+                    className="input w-full mb-5"
+                  />
+                  <label className="label">Price</label>
+                  <input
+                    type="text"
+                    name="price"
+                    className="input w-full mb-5"
+                    defaultValue={service?.price}
+                  />
+                  <button className="w-full bg-primary text-white py-3 rounded-lg font-medium hover:bg-primary/90 transition cursor-pointer">
+                    Book Now
+                  </button>
+                </form>
+                <div className="modal-action">
+                  <form method="dialog">
+                    {/* if there is a button in form, it will close the modal */}
+                    <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                      ✕
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </dialog>
           </div>
         </section>
       </div>

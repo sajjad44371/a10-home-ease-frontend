@@ -6,12 +6,13 @@ import { AuthContext } from "../../Provider/AuthContext";
 import { use } from "react";
 
 const Navbar = () => {
-  const { user, logOut } = use(AuthContext);
+  const { user, logOut, setLoading } = use(AuthContext);
 
   const handleLogout = () => {
     logOut()
       .then(() => {
         console.log("Sign out successfully");
+        setLoading(false);
       })
       .catch((error) => {
         console.log("Error happened", error.code);

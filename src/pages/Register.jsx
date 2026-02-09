@@ -13,7 +13,7 @@ import { Link } from "react-router";
 import { AuthContext } from "../Provider/AuthContext";
 
 const Register = () => {
-  const { createUser } = use(AuthContext);
+  const { createUser, setLoading } = use(AuthContext);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -68,6 +68,7 @@ const Register = () => {
           console.log(currentUser);
           alert("User created Successfully");
           e.target.reset();
+          setLoading(false);
         })
         .catch((error) => {
           console.error(error.code);
@@ -194,15 +195,15 @@ const Register = () => {
               <ul className="mt-2 pl-1 space-y-1">
                 {renderValidationItem(
                   validation.minLength,
-                  "Minimum 6 characters"
+                  "Minimum 6 characters",
                 )}
                 {renderValidationItem(
                   validation.hasUppercase,
-                  "At least one uppercase letter (A-Z)"
+                  "At least one uppercase letter (A-Z)",
                 )}
                 {renderValidationItem(
                   validation.hasLowercase,
-                  "At least one lowercase letter (a-z)"
+                  "At least one lowercase letter (a-z)",
                 )}
               </ul>
             )}

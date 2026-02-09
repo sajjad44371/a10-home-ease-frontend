@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { Link } from "react-router";
+import { AuthContext } from "../Provider/AuthContext";
 
 const MyServices = () => {
   const [services, setServices] = useState([]);
+  const { user } = use(AuthContext);
 
   useEffect(() => {
-    fetch("http://localhost:3000/services")
+    fetch(`http://localhost:3000/services?email=${user.email}`)
       .then((res) => res.json())
       .then((data) => {
         setServices(data);
       });
-  }, []);
+  }, [user?.email]);
 
   const handleDelete = (id) => {
     fetch(`http://localhost:3000/services/${id}`, {

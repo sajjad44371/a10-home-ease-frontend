@@ -1,15 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
+import { AuthContext } from "../Provider/AuthContext";
 
 const MyBookings = () => {
   const [bookings, setBookings] = useState([]);
+  const { user } = use(AuthContext);
 
   useEffect(() => {
-    fetch("http://localhost:3000/bookings")
+    fetch(`http://localhost:3000/bookings?email=${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         setBookings(data);
       });
-  }, []);
+  }, [user?.email]);
+
+  const handleDelete = (id) => {
+    fetch(`http://localhost:3000/bookings/${id}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.deletedCount) {
+          alert("Successfully cancel");
+          const remainingBookings = bookings.filter((book) => book._id !== id);
+          setBookings(remainingBookings);
+        }
+      });
+  };
 
   return (
     <div>
@@ -46,10 +62,10 @@ const MyBookings = () => {
                     <td>{book.price}</td>
                     <th>
                       <button
-                        // onClick={() => handleDelete(service._id)}
+                        onClick={() => handleDelete(book._id)}
                         className="btn btn-ghost btn-xs"
                       >
-                        Delete
+                        Cancel
                       </button>
                     </th>
                   </tr>

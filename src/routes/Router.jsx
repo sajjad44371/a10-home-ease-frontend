@@ -11,6 +11,7 @@ import Register from "../pages/Register";
 import PrivateRouter from "./PrivateRouter";
 import ServiceDetails from "../pages/ServiceDetails";
 import ServiceUpdate from "../pages/ServiceUpdate";
+import Loading from "../components/Loading/Loading";
 
 const router = createBrowserRouter([
   {
@@ -63,12 +64,14 @@ const router = createBrowserRouter([
       },
       {
         path: "/service-details/:id",
+        hydrateFallbackElement: <Loading></Loading>,
         loader: ({ params }) =>
           fetch(`http://localhost:3000/services/${params.id}`),
         element: <ServiceDetails></ServiceDetails>,
       },
       {
         path: "/service-update/:id",
+        hydrateFallbackElement: <Loading></Loading>,
         loader: ({ params }) =>
           fetch(`http://localhost:3000/services/${params.id}`),
         element: <ServiceUpdate></ServiceUpdate>,

@@ -12,11 +12,13 @@ import PrivateRouter from "./PrivateRouter";
 import ServiceDetails from "../pages/ServiceDetails";
 import ServiceUpdate from "../pages/ServiceUpdate";
 import Loading from "../components/Loading/Loading";
+import NotFound from "../pages/NotFound";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <HomeLayout></HomeLayout>,
+    hydrateFallbackElement: <Loading></Loading>,
     children: [
       {
         index: true,
@@ -64,23 +66,23 @@ const router = createBrowserRouter([
       },
       {
         path: "/service-details/:id",
-        hydrateFallbackElement: <Loading></Loading>,
         loader: ({ params }) =>
           fetch(`http://localhost:3000/services/${params.id}`),
         element: <ServiceDetails></ServiceDetails>,
+        hydrateFallbackElement: <Loading></Loading>,
       },
       {
         path: "/service-update/:id",
-        hydrateFallbackElement: <Loading></Loading>,
         loader: ({ params }) =>
           fetch(`http://localhost:3000/services/${params.id}`),
         element: <ServiceUpdate></ServiceUpdate>,
+        hydrateFallbackElement: <Loading></Loading>,
       },
     ],
   },
   {
     path: "*",
-    element: <h3 className="text-red-400">404 not found</h3>,
+    element: <NotFound></NotFound>,
   },
 ]);
 

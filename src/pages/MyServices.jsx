@@ -1,18 +1,20 @@
 import React, { use, useEffect, useState } from "react";
 import { Link } from "react-router";
 import { AuthContext } from "../Provider/AuthContext";
+import Loading from "../components/Loading/Loading";
 
 const MyServices = () => {
   const [services, setServices] = useState([]);
-  const { user } = use(AuthContext);
+  const { user, loading, setLoading } = use(AuthContext);
 
   useEffect(() => {
     fetch(`http://localhost:3000/services?email=${user.email}`)
       .then((res) => res.json())
       .then((data) => {
         setServices(data);
+        setLoading(false);
       });
-  }, [user?.email]);
+  }, [user?.email, setLoading]);
 
   const handleDelete = (id) => {
     fetch(`http://localhost:3000/services/${id}`, {
@@ -29,6 +31,10 @@ const MyServices = () => {
         }
       });
   };
+
+  if (loading) {
+    return <Loading></Loading>;
+  }
 
   return (
     <div className=" min-h-screen bg-base-100 w-full">

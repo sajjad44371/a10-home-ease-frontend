@@ -1,21 +1,21 @@
-import React from "react";
+import React, { use } from "react";
 import { useLoaderData, useNavigate } from "react-router";
+import { AuthContext } from "../Provider/AuthContext";
+import Loading from "../components/Loading/Loading";
 
 const ServiceUpdate = () => {
+  const { loading, setLoading } = use(AuthContext);
   const serviceData = useLoaderData();
   const service = serviceData[0];
   const navigate = useNavigate();
 
   const handleUpdate = (e) => {
     e.preventDefault();
-    console.log("Clicked");
     const service_name = e.target.name.value;
     const price = e.target.price.value;
     const description = e.target.desc.value;
     const category = e.target.cat.value;
     const photoURL = e.target.photo.value;
-
-    console.log(service_name, price, description, category, photoURL);
 
     const updatedService = {
       service_name,
@@ -36,10 +36,15 @@ const ServiceUpdate = () => {
       .then((data) => {
         if (data.modifiedCount) {
           alert("Successfully updated");
-          navigate("/my-services")
+          setLoading(false)
+          navigate("/my-services");
         }
       });
   };
+
+  if(loading){
+    return <Loading></Loading>
+  }
 
   return (
     <>

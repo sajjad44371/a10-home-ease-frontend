@@ -11,9 +11,10 @@ import {
 } from "lucide-react";
 import { Link } from "react-router";
 import { AuthContext } from "../Provider/AuthContext";
+import Loading from "../components/Loading/Loading";
 
 const Register = () => {
-  const { createUser, setLoading } = use(AuthContext);
+  const { createUser, setLoading, loading } = use(AuthContext);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -56,8 +57,6 @@ const Register = () => {
     const photoUrl = e.target.photoUrl.value;
     const password = e.target.password.value;
 
-    console.log(name, email, photoUrl, password);
-
     if (validation.isValid) {
       console.log("Registration Data Submitted:", formData);
       // TODO: Add your actual registration logic here (e.g., API call to Firebase/Backend)
@@ -73,6 +72,7 @@ const Register = () => {
         .catch((error) => {
           console.error(error.code);
           alert(error.code);
+          setLoading(false);
         });
       alert("Registration Attempted! Check the console for data.");
     } else {
@@ -94,6 +94,10 @@ const Register = () => {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+
+  if (loading) {
+    return <Loading></Loading>;
+  }
 
   return (
     <div className="py-20 bg-base-100 flex justify-center items-center w-full">

@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { AuthContext } from "../Provider/AuthContext";
 import { Image, User, X } from "lucide-react";
 import { FaCross } from "react-icons/fa";
+import Loading from "../components/Loading/Loading";
 
 const Profile = () => {
   const { user, loading, setLoading, updateProfileInfo } =
@@ -21,10 +22,11 @@ const Profile = () => {
       .catch((error) => {
         console.log("Error happened", error.code);
         alert(error.code);
+        setLoading(false);
       });
   };
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loading></Loading>;
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">

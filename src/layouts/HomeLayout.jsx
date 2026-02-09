@@ -1,9 +1,12 @@
 import React from "react";
-import { Outlet } from "react-router";
+import { Outlet, useNavigation } from "react-router";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
+import Loading from "../components/Loading/Loading";
 
 const HomeLayout = () => {
+  const navigation = useNavigation();
+  const isLoading = navigation.state === "loading";
   return (
     <>
       <div>
@@ -11,7 +14,13 @@ const HomeLayout = () => {
           <Navbar></Navbar>
         </header>
         <main className="">
-          <Outlet></Outlet>
+          {isLoading ? (
+            <div className="flex justify-center items-center h-[60vh]">
+              <Loading></Loading>
+            </div>
+          ) : (
+            <Outlet></Outlet>
+          )}
         </main>
         <footer>
           <Footer></Footer>

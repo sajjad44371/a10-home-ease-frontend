@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Slider from "../components/Slider/Slider";
 import Testimonials from "../components/Testimonials/Testimonials";
 import WhyChoose from "../components/WhyChoose/WhyChoose";
@@ -6,10 +6,11 @@ import ProSection from "../components/ProSection/ProSection";
 import ServiceTracker from "../components/ServiceTracker/ServiceTracker";
 import Faq from "../components/FAQ/Faq";
 import LatestServices from "../components/LatestServices/LatestServices";
+import Loading from "../components/Loading/Loading";
 
 // promise
 const latestServicesPromise = fetch("http://localhost:3000/services").then(
-  (res) => res.json()
+  (res) => res.json(),
 );
 
 const Home = () => {
@@ -19,9 +20,11 @@ const Home = () => {
         <Slider></Slider>
       </section>
       <section>
-        <LatestServices
-          latestServicesPromise={latestServicesPromise}
-        ></LatestServices>
+        <Suspense fallback={<Loading></Loading>}>
+          <LatestServices
+            latestServicesPromise={latestServicesPromise}
+          ></LatestServices>
+        </Suspense>
       </section>
       <section>
         <WhyChoose></WhyChoose>

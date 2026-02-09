@@ -1,17 +1,19 @@
 import React, { use, useEffect, useState } from "react";
 import { AuthContext } from "../Provider/AuthContext";
+import Loading from "../components/Loading/Loading";
 
 const MyBookings = () => {
   const [bookings, setBookings] = useState([]);
-  const { user } = use(AuthContext);
+  const { user, loading, setLoading } = use(AuthContext);
 
   useEffect(() => {
     fetch(`http://localhost:3000/bookings?email=${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         setBookings(data);
+        setLoading(false);
       });
-  }, [user?.email]);
+  }, [user?.email, setLoading]);
 
   const handleDelete = (id) => {
     fetch(`http://localhost:3000/bookings/${id}`, {
@@ -26,6 +28,10 @@ const MyBookings = () => {
         }
       });
   };
+
+  if (loading) {
+    return <Loading></Loading>;
+  }
 
   return (
     <div>

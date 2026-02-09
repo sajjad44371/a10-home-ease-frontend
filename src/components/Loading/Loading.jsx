@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import { Home, Wrench, Zap, Droplets, Sparkles, Fan } from "lucide-react";
 
 const Loading = () => {
-  // Service icons and their positions in the circle
   const icons = [
     { Icon: Wrench, color: "text-orange-500", delay: 0 },
     { Icon: Zap, color: "text-yellow-500", delay: 0.2 },
@@ -13,25 +12,26 @@ const Loading = () => {
   ];
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[400px] w-full bg-slate-50">
-      <div className="relative w-48 h-48 flex items-center justify-center">
+    /* Full Screen Overlay wrapper */
+    <div className="fixed inset-0 z-9999 flex flex-col items-center justify-center bg-white/80 backdrop-blur-md">
+      <div className="relative w-64 h-64 flex items-center justify-center">
         {/* Central Home Icon with Pulse effect */}
         <motion.div
           animate={{
-            scale: [1, 1.1, 1],
-            opacity: [0.8, 1, 0.8],
+            scale: [1, 1.15, 1],
+            opacity: [0.9, 1, 0.9],
           }}
           transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-          className="z-10 bg-white p-5 rounded-full shadow-xl border border-blue-100"
+          className="z-10 bg-white p-6 rounded-full shadow-2xl border border-blue-50/50"
         >
-          <Home size={48} className="text-blue-600" />
+          <Home size={60} className="text-blue-600" />
         </motion.div>
 
         {/* Orbiting Icons */}
         {icons.map((item, index) => {
           const angle = index * (360 / icons.length) * (Math.PI / 180);
-          const x = Math.cos(angle) * 80; // Radius 80
-          const y = Math.sin(angle) * 80;
+          const x = Math.cos(angle) * 100; // Expanded radius for full screen
+          const y = Math.sin(angle) * 100;
 
           return (
             <motion.div
@@ -39,8 +39,8 @@ const Loading = () => {
               initial={{ opacity: 0 }}
               animate={{
                 opacity: 1,
-                x: [x, x + 5, x],
-                y: [y, y - 5, y],
+                x: [x, x + 8, x],
+                y: [y, y - 8, y],
               }}
               transition={{
                 delay: item.delay,
@@ -48,9 +48,9 @@ const Loading = () => {
                 repeat: Infinity,
                 ease: "easeInOut",
               }}
-              className={`absolute p-3 bg-white rounded-full shadow-md ${item.color}`}
+              className={`absolute p-4 bg-white rounded-full shadow-lg border border-slate-50 ${item.color}`}
             >
-              <item.Icon size={24} />
+              <item.Icon size={28} />
             </motion.div>
           );
         })}
@@ -58,23 +58,27 @@ const Loading = () => {
         {/* Outer Rotating Ring */}
         <motion.div
           animate={{ rotate: 360 }}
-          transition={{ repeat: Infinity, duration: 8, ease: "linear" }}
-          className="absolute w-40 h-40 border-2 border-dashed border-blue-200 rounded-full"
+          transition={{ repeat: Infinity, duration: 10, ease: "linear" }}
+          className="absolute w-52 h-52 border-2 border-dashed border-blue-200/60 rounded-full"
         />
       </div>
 
       {/* Loading Text & Progress Bar */}
-      <div className="mt-10 text-center">
-        <h3 className="text-xl font-semibold text-slate-700 tracking-wide">
+      <div className="mt-12 text-center">
+        <motion.h3
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-2xl font-bold text-slate-800 tracking-tight"
+        >
           Loading Home Services...
-        </h3>
+        </motion.h3>
 
-        <div className="w-48 h-1.5 bg-slate-200 rounded-full mt-4 overflow-hidden">
+        <div className="w-64 h-2 bg-slate-200 rounded-full mt-6 overflow-hidden shadow-inner">
           <motion.div
             initial={{ x: "-100%" }}
             animate={{ x: "100%" }}
-            transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }}
-            className="w-full h-full bg-gradient-to-r from-blue-400 via-blue-600 to-blue-400"
+            transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
+            className="w-full h-full bg-linear-to-r from-blue-400 via-blue-600 to-blue-400 shadow-[0_0_15px_rgba(37,99,235,0.4)]"
           />
         </div>
       </div>

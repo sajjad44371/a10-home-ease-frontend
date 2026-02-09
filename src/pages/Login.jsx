@@ -5,10 +5,12 @@ import { FcGoogle } from "react-icons/fc";
 import { use } from "react";
 import { AuthContext } from "../Provider/AuthContext";
 import { useNavigate } from "react-router";
+import Loading from "../components/Loading/Loading";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const { googleSignIn, setLoading, loginUser, setUser } = use(AuthContext);
+  const { googleSignIn, setLoading, loginUser, setUser, loading } =
+    use(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
   const from = location.state?.from?.pathname;
@@ -51,6 +53,10 @@ const Login = () => {
         alert(error.code);
       });
   };
+
+  if (loading) {
+    return <Loading></Loading>;
+  }
 
   return (
     <div className="py-20 bg-base-100 flex justify-center items-center w-full">

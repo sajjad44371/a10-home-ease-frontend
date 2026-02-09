@@ -1,16 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import ServiceCard from "../components/ServiceCard/ServiceCard";
+import { AuthContext } from "../Provider/AuthContext";
+import Loading from "../components/Loading/Loading";
 
 const Services = () => {
   const [services, setServices] = useState([]);
+  const { loading, setLoading } = use(AuthContext);
 
   useEffect(() => {
     fetch("http://localhost:3000/services")
       .then((res) => res.json())
       .then((data) => {
         setServices(data);
+        setLoading(false);
       });
-  }, []);
+  }, [setLoading]);
+
+  if (loading) {
+    return <Loading></Loading>;
+  }
 
   return (
     <div className="min-h-screen bg-base-100 w-full">
